@@ -1,8 +1,15 @@
 var http = require('http');
 
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
 
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('Hello World!');
-  
-}).listen(8080);
+    console.log(req.url, req.method, req.headers);
+    res.setHeader("Content-Type", "text/html");
+    res.write("<html>");
+    res.write("<head><title>Test Node</title></head>");
+    res.write("<body><h1>This is a node js test response.</h1></body>");
+    res.write("</html>");
+    res.end();
+
+});
+
+server.listen(8080);
