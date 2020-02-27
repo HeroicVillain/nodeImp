@@ -1,4 +1,10 @@
 var http = require('http');
+const getPort = require('get-port');
+
+var serverPort = (async () => {
+    await getPort({port: getPort.makeRange(30000, 50000)});
+    // Will use any port from 3000 to 3100, otherwise fall back to a random port
+})();
 
 const server = http.createServer((req, res) => {
 
@@ -12,4 +18,11 @@ const server = http.createServer((req, res) => {
 
 });
 
-server.listen(31579);
+(async () => {
+    serverPort = await getPort({port: getPort.makeRange(30000, 50000)});
+    console.log("Server running on port: "+ serverPort);
+    // Will use any port from 3000 to 3100, otherwise fall back to a random port
+    server.listen(serverPort);
+})();
+
+
